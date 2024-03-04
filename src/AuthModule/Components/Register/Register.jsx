@@ -41,8 +41,8 @@ export default function Register() {
   return (
     <>
     
-    <div className="row justify-content-center align-items-center vh-100 register">
-            <div className="col-md-8 registerwidth overflow-auto">
+    <div className="row justify-content-center align-items-center vh-100 register overflow-auto">
+            <div className="col-md-8 my-2">
             <div className="login bg-white rounded-4 px-5 py-4 ">
               <div className="logo-container text-center mb-3">
               <img src={logo} alt="food-logo" className='' />
