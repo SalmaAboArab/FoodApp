@@ -239,11 +239,11 @@ background-color: rgba(0, 146, 71, 0.2);
 } */
 
 /* Hide scrollbar for Chrome, Safari and Opera */
-.register::-webkit-scrollbar {
+.pageOverflow::-webkit-scrollbar {
   display: none;
 }
 /* Hide scrollbar for IE, Edge and Firefox */
-.register {
+.pageOverflow {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
