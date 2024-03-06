@@ -11,7 +11,7 @@ export default function MasterLayout({adminData}) {
         <div className=" sdbar">
                 <SideBar loginData={adminData}/>
             </div>
-            <div className="w-100 mx-2">
+            <div className="w-100 mx-2 vh-100 pageOverflow overflow-auto">
                 <NavBar adminData={adminData}/>
                 <Outlet/>
             </div>
