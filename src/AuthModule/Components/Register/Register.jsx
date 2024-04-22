@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { baseUrl } from '../../../Constants/URLs';
 
 
 export default function Register() {
@@ -29,7 +30,7 @@ export default function Register() {
   const onSubmit=async(data)=>{
     let formData= appendFormData(data);
     try{
-      let response=await axios.post("https://upskilling-egypt.com:443/api/v1/Users/Register",formData);
+      let response=await axios.post(`${baseUrl}/Users/Register`,formData);
       localStorage.setItem("userEmail",data.email);
       toast.success('Account created successfuly, Please check your email')
       navigate('/verifyAccount')

@@ -9,6 +9,7 @@ import food from '../../../assets/imgs/food.jpg'
 import Card from 'react-bootstrap/Card';
 import { CardSubtitle } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+import { baseUrl } from '../../../Constants/URLs';
 
 export default function FavoritesList() {
   const [favList,setFavList]=useState([]);
@@ -21,7 +22,7 @@ export default function FavoritesList() {
   const getList=async()=>{
     setIsLoading(true);
     try{
-      let response=await axios.get("https://upskilling-egypt.com:443/api/v1/userRecipe/",
+      let response=await axios.get(`${baseUrl}/userRecipe/`,
       {headers:{Authorization:token}});
       setFavList(response?.data?.data);
       // console.log(response?.data?.data);
@@ -37,7 +38,7 @@ export default function FavoritesList() {
     ViewHandleClose();
     setIsLoading(true);
     try{
-      let response=await axios.delete(`https://upskilling-egypt.com:443/api/v1/userRecipe/${id}`,
+      let response=await axios.delete(`${baseUrl}/userRecipe/${id}`,
       {headers:{Authorization:token}});
     setIsLoading(false);
     getList();
@@ -87,7 +88,7 @@ export default function FavoritesList() {
     (
       favList?.map((fav)=>{return(
 <Card key={fav.id} style={{ width: '19rem' }} className=' mt-5 shadow border-0 mx-2 rounded-5'>
-    <Card.Img variant="top" src={fav?.recipe?.imagePath?`https://upskilling-egypt.com/${fav?.recipe?.imagePath}`:food} style={{height:'10rem'}} className='rounded-5'/>
+    <Card.Img variant="top" src={fav?.recipe?.imagePath?`https://upskilling-egypt.com:3006/${fav?.recipe?.imagePath}`:food} style={{height:'10rem'}} className='rounded-5'/>
     <Card.Body>
       <Card.Title>{fav?.recipe?.name}</Card.Title>
       <CardSubtitle className='mt-3'>Category: {fav?.recipe?.category[0]?.name}</CardSubtitle>

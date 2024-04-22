@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import DeleteModal from '../../../SharedModule/Components/DeleteModal/DeleteModal'
 import Loading from '../../../SharedModule/Components/Loading/Loading'
 import NoData from '../../../SharedModule/Components/NoData/NoData'
+import { baseUrl } from '../../../Constants/URLs'
 
 export default function CategoriesList() {
   const [categoriesList,setCategoriesList]=useState([])
@@ -44,7 +45,7 @@ export default function CategoriesList() {
   const onSubmitAdd=async()=>{
     try{
       if(currentName){
-        let response=await axios.post('https://upskilling-egypt.com:443/api/v1/Category/',{name:currentName},{headers:{Authorization:token}})
+        let response=await axios.post(`${baseUrl}/Category/`,{name:currentName},{headers:{Authorization:token}})
       handleClose();
       getList();
       toast.success('Category added succefully')
@@ -58,7 +59,7 @@ export default function CategoriesList() {
   const onSubmitUpdate=async()=>{
     try{
      if(currentName){
-      let response=await axios.put(`https://upskilling-egypt.com:443/api/v1/Category/${currentId}`,{name:currentName},{headers:{Authorization:token}})
+      let response=await axios.put(`${baseUrl}/Category/${currentId}`,{name:currentName},{headers:{Authorization:token}})
       handleClose();
       getList();
       toast.success('Category updated succefully')
@@ -72,7 +73,7 @@ export default function CategoriesList() {
   const getList=async(pageNumber,name)=>{
     setIsLoading(true);
     try{
-      let categoriesData=await axios.get('https://upskilling-egypt.com:443/api/v1/Category/',
+      let categoriesData=await axios.get(`${baseUrl}/Category/`,
       {headers:{Authorization:token},
       params:{
         pageSize:5,

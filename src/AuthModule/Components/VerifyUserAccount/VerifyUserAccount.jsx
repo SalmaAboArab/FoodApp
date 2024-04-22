@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { baseUrl } from '../../../Constants/URLs';
 
 
 export default function VerifyUserAccount() {
@@ -15,7 +16,7 @@ export default function VerifyUserAccount() {
     const onSubmit=async(data)=>{
         
       try{
-        let response=await axios.put("https://upskilling-egypt.com:443/api/v1/Users/verify",
+        let response=await axios.put(`${baseUrl}/Users/verify`,
         {
             "email": userEmail,
             "code": data.code

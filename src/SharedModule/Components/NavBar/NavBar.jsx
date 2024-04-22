@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import avatar from "../../../assets/imgs/Avatar.png"
 import axios from 'axios';
+import { baseUrl } from '../../../Constants/URLs';
 
 export default function NavBar({adminData}) {
   let token=localStorage.getItem("adminToken");
   const [CurruntUser,setCurruntUser]=useState(null)
   const getuser=async()=>{
     try{
-      let response=await axios.get("https://upskilling-egypt.com:443/api/v1/Users/currentUser",
+      let response=await axios.get(`${baseUrl}/Users/currentUser`,
       {headers:{Authorization:token}});
    
       setCurruntUser(response?.data);

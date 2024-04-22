@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { baseUrl } from '../../../Constants/URLs';
 
 export default function Login({saveAdminData}) {
   const navigate=useNavigate();
@@ -26,7 +27,8 @@ export default function Login({saveAdminData}) {
     // })
     try{
       // console.log(data);
-      let response=await axios.post("https://upskilling-egypt.com:443/api/v1/Users/Login",data);
+      
+      let response=await axios.post(`${baseUrl}/Users/Login`,data);
       localStorage.setItem("adminToken",response.data.token)
       saveAdminData()
       toast.success('Login Success')

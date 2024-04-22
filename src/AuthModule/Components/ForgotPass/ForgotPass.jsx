@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { baseUrl } from '../../../Constants/URLs';
 
 
 export default function ForgotPass() {
@@ -12,7 +13,7 @@ export default function ForgotPass() {
 
   const onSubmit=async(data)=>{
     try{
-      let response=await axios.post("https://upskilling-egypt.com:443/api/v1/Users/Reset/Request",data);
+      let response=await axios.post(`${baseUrl}/Users/Reset/Request`,data);
       toast('Check your email please')
       navigate('/resetpass')
     } catch(error){

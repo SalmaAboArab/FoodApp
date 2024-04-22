@@ -8,6 +8,7 @@ import Loading from '../../../SharedModule/Components/Loading/Loading';
 import DeleteModal from '../../../SharedModule/Components/DeleteModal/DeleteModal';
 import Avatar from '../../../assets/imgs/Avatar.png'
 import ViewModal from '../../../SharedModule/Components/ViewModal/ViewModal';
+import { baseUrl } from '../../../Constants/URLs';
 
 
 export default function UsersList() {
@@ -32,7 +33,7 @@ export default function UsersList() {
   const getusersList=async(pageNumber,name,email,country,groups)=>{
     setIsLoading(true);
     try{
-      let response=await axios.get("https://upskilling-egypt.com:443/api/v1/Users/",
+      let response=await axios.get(`${baseUrl}/Users/`,
       {headers:{Authorization:token},
     params:{
       pageNumber:pageNumber,
