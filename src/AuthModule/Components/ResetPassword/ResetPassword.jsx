@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { baseUrl } from '../../../Constants/URLs';
 
 export default function ResetPassword() {
     const [toggle1, setToggle1] = useState(false);
@@ -21,7 +22,7 @@ export default function ResetPassword() {
 
       try{
         // if(data.password==data.confirmPassword){
-          let response=await axios.post("https://upskilling-egypt.com:443/api/v1/Users/Reset",data);
+          let response=await axios.post(`${baseUrl}/Users/Reset`,data);
         toast.success('Password updated successfully')
         navigate('/login')
         // }

@@ -9,6 +9,7 @@ import food from '../../../assets/imgs/food.jpg'
 import DeleteModal from '../../../SharedModule/Components/DeleteModal/DeleteModal';
 import { useNavigate } from 'react-router-dom';
 import ViewModal from '../../../SharedModule/Components/ViewModal/ViewModal';
+import { baseUrl } from '../../../Constants/URLs';
 // import { Box, Pagination } from '@mui/material';
 
 
@@ -52,7 +53,7 @@ export default function RecipesList() {
   const addtofavorite=async(recipeid)=>{
     setIsLoading(true);
     try {
-    const response=await axios.post('https://upskilling-egypt.com:443/api/v1/userRecipe/',{'recipeId':recipeid},{headers:{Authorization:token}});
+    const response=await axios.post(`${baseUrl}/userRecipe/`,{'recipeId':recipeid},{headers:{Authorization:token}});
     getrecipesList(1);
     // getFavoriteList();
     toast.success('Recipe added to favorite successfully');
@@ -66,9 +67,10 @@ export default function RecipesList() {
 
 
   const getrecipesList=async(pageNumber,name,tagId,categId)=>{
+    if(localStorage.getItem('recipeId')) localStorage.removeItem('recipeId');
     setIsLoading(true);
     try{
-      let response=await axios.get("https://upskilling-egypt.com:443/api/v1/Recipe/",
+      let response=await axios.get(`${baseUrl}/Recipe/`,
       {headers:{Authorization:token},
       params:{
         pageNumber:pageNumber,
@@ -83,6 +85,7 @@ export default function RecipesList() {
       setRecipesList(response?.data?.data);
       // console.log(response.data.totalNumberOfPages);
     setIsLoading(false);
+    // console.log(response);
     }catch(error){
       // console.log(error);
       toast.error(error?.message||"Something went wrong!")
@@ -93,17 +96,17 @@ export default function RecipesList() {
 
   const getCategoriesList=async()=>{
     try{
-      let categoriesData=await axios.get('https://upskilling-egypt.com:443/api/v1/Category/?pageSize=10&pageNumber=1',{headers:{Authorization:token}})
+      let categoriesData=await axios.get(`${baseUrl}/Category/?pageSize=10&pageNumber=1`,{headers:{Authorization:token}})
       setCategoriesList(categoriesData.data.data);
     }catch(error){
-      console.log(error);
-      // toast.error(error?.message||'Something went wrong!')      
+      // console.log(error);
+      toast.error(error?.message||'Something went wrong!')      
     }
   }
 
   const getTagsList=async()=>{
     try{
-      let tagsData=await axios.get('https://upskilling-egypt.com:443/api/v1/tag',{headers:{Authorization:token}})
+      let tagsData=await axios.get(`${baseUrl}/tag`,{headers:{Authorization:token}})
       settagsList(tagsData.data);
       // console.log(tagsData.data);
     }catch(error){
@@ -239,7 +242,10 @@ export default function RecipesList() {
                      <th className={index%2==0?'bg-white border-0':'bg-light border-0'} scope="row">{recipe.id}</th>
                      <td className={index%2==0?'bg-white border-0':'bg-light border-0'}>{recipe.name}</td>
                      <td className={index%2==0?'bg-white border-0':'bg-light border-0'}>
-                      {recipe.imagePath?<img className='userlistimg' src={`https://upskilling-egypt.com/${recipe.imagePath}`} alt="" />
+                      {recipe.imagePath?
+                      <img className='userlistimg' 
+                      src={`https://upskilling-egypt.com:3006/${recipe?.imagePath}`}
+                       alt="Food image" />
                       :<img className='userlistimg' src={food} alt="" />}
                       </td>
                      <td className={index%2==0?'bg-white border-0':'bg-light border-0'}>{recipe.price}</td>

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { baseUrl } from '../../../Constants/URLs';
 
 export default function ChangePass({handleClose}) {
     const [toggle, setToggle] = useState(false);
@@ -19,7 +20,7 @@ export default function ChangePass({handleClose}) {
         // reset()
 
       try{
-        let response=await axios.put("https://upskilling-egypt.com:443/api/v1/Users/ChangePassword",data,{headers:{Authorization:token}});
+        let response=await axios.put(`${baseUrl}/Users/ChangePassword`,data,{headers:{Authorization:token}});
         toast.success(response.data.message)
         handleClose()
       } catch(error){

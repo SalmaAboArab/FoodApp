@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import noData from '../../../assets/imgs/no-datasm.png'
 import { toast } from 'react-toastify';
 import axios from 'axios'
+import { baseUrl } from '../../../Constants/URLs';
 
 export default function DeleteModal({id,closeDeleteModal,getList,type}) {
     const [deleteShow, setDeleteShow] = useState(true);
@@ -11,7 +12,7 @@ export default function DeleteModal({id,closeDeleteModal,getList,type}) {
 
     const onSubmitDelete=async()=>{
         try{
-          let response=await axios.delete(`https://upskilling-egypt.com:443/api/v1/${type}/${id}`,{headers:{Authorization:token}})
+          let response=await axios.delete(`${baseUrl}/${type}/${id}`,{headers:{Authorization:token}})
           deleteHandleClose();
           toast.success('Item deleted succefully')
           getList()

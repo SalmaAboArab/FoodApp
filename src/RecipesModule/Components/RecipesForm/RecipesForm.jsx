@@ -4,7 +4,8 @@ import RecipesHeader from '../../../SharedModule/Components/RecipesHeader/Recipe
 import { useForm } from 'react-hook-form'
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import avatar from '../../../assets/imgs/Avatar.png'
+import avatar from '../../../assets/imgs/food.jpg'
+import { baseUrl } from '../../../Constants/URLs';
 
 
 export default function RecipesForm() {
@@ -47,9 +48,13 @@ export default function RecipesForm() {
   const getcurruntRecipe=async()=>{
     // setIsLoading(true);
     try{
-      let recipe=await axios.get(`https://upskilling-egypt.com:443/api/v1/Recipe/${currentId}`,{headers:{Authorization:token}})
+      let recipe=await axios.get(`${baseUrl}/Recipe/${currentId}`,{headers:{Authorization:token}})
       setcurruntRecipe(recipe.data);
-      setCurrentCategory(recipe?.data?.category[0]?.name)
+      setCurrentCategory(recipe?.data?.category[0]?.name);
+      {recipe?.data?.imagePath?
+        setCurrentImg(`https://upskilling-egypt.com:3006/`+recipe?.data?.imagePath)
+        :''
+      }
       // setCurrentImg(`https://upskilling-egypt.com:443/${recipe?.data?.imagePath}`)
 
       // console.log(recipe.data);
@@ -72,7 +77,7 @@ export default function RecipesForm() {
   const onSubmitAdd=async(data)=>{
     let recipeDataForm= appendAddFormData(data);
     try{
-        let response=await axios.post('https://upskilling-egypt.com:443/api/v1/Recipe/',recipeDataForm,{headers:{Authorization:token}})
+        let response=await axios.post(`${baseUrl}/Recipe/`,recipeDataForm,{headers:{Authorization:token}})
       toast.success(response.data.message)
       navigate('/dashboard/recipes')
     // console.log(response);
@@ -85,12 +90,12 @@ export default function RecipesForm() {
   const onSubmitUpdate=async(data)=>{
     let imageFile;
     if(curruntRecipe.imagePath){
-      const imageResponse=await axios(`https://upskilling-egypt.com/${curruntRecipe.imagePath}`,{responseType:"blob"});
+      const imageResponse=await axios(`https://upskilling-egypt.com:3006/${curruntRecipe.imagePath}`,{responseType:"blob"});
       imageFile=imageResponse.data;
     }
     let recipeDataForm= appendUpdateFormData(data,imageFile);
     try{
-      let response=await axios.put(`https://upskilling-egypt.com:443/api/v1/Recipe/${currentId}`,recipeDataForm,{headers:{Authorization:token}})
+      let response=await axios.put(`${baseUrl}/Recipe/${currentId}`,recipeDataForm,{headers:{Authorization:token}})
       toast.success('Category updated succefully')
       navigate('/dashboard/recipes')
     }catch(error){
@@ -102,7 +107,7 @@ export default function RecipesForm() {
   const getCategoriesList=async()=>{
     // setIsLoading(true);
     try{
-      let categoriesData=await axios.get('https://upskilling-egypt.com:443/api/v1/Category/?pageSize=10&pageNumber=1',{headers:{Authorization:token}})
+      let categoriesData=await axios.get(`${baseUrl}/Category/?pageSize=10&pageNumber=1`,{headers:{Authorization:token}})
       setCategoriesList(categoriesData.data.data);
     //   setIsLoading(false);
     }catch(error){
@@ -116,7 +121,7 @@ export default function RecipesForm() {
   const getTagsList=async()=>{
     // setIsLoading(true);
     try{
-      let tagsData=await axios.get('https://upskilling-egypt.com:443/api/v1/tag',{headers:{Authorization:token}})
+      let tagsData=await axios.get(`${baseUrl}/tag`,{headers:{Authorization:token}})
       settagsList(tagsData.data);
       // console.log(tagsData.data);
     //   setIsLoading(false);
@@ -231,12 +236,22 @@ export default function RecipesForm() {
 
 
 
-<label for="images" className="drop-container" id="dropcontainer">
+<label for="images" className="drop-container" id="dropcontainer" 
+onChange={(e) =>
+  setCurrentImg(URL.createObjectURL(e?.target?.files[0]))
+}
+>
   <div className='py-2'><i className='fa fa-upload fa-2xl'></i></div>
   <span className="drop-title bg-transparent">Drag & Drop </span>
   or
   <input type="file" id="images" accept="image/*" {...register('recipeImage')}/>
-  {/* <section className='text-center'><img src={avatar} alt="" className='userlistimg mb-2'/></section> */}
+  {/* {type==='Update'?
+  <section className='text-center '><img src={currentImg} alt="" className='userlistimg mb-2'/></section>
+  :
+  <section className='text-center'><img src={avatar} alt="" className='userlistimg mb-2'/></section>
+  } */}
+
+<section className='text-center '><img src={currentImg} alt="" className='userlistimg mb-2'/></section>
 </label>
 
 
