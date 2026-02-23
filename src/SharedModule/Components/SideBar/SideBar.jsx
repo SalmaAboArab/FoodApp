@@ -8,7 +8,7 @@ import ChangePass from '../../../AuthModule/Components/Change-Password/ChangePas
 
 
 export default function SideBar({loginData}) {
-  const [isCollapsed,setIsCollapsed]=useState(false);
+  const [isCollapsed,setIsCollapsed]=useState(true);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
